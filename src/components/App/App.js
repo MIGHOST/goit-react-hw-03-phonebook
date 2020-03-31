@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component} from 'react';
 import ContactForm from '../ContactForm/ContactForm';
 import shortid from 'shortid';
 import ContactList from '../ContactList/ContactList';
