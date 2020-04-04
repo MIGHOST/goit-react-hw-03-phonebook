@@ -1,11 +1,12 @@
-import React, { Component} from 'react';
+import React, { Component } from 'react';
 import ContactForm from '../ContactForm/ContactForm';
 import shortid from 'shortid';
 import ContactList from '../ContactList/ContactList';
 import ContactFilter from '../ContactFilter/ContactFilter';
-import filterContact from '../helpers/filterContact';
-import findContact from '../helpers/findContact';
-
+import filterContact from '../../helpers/filterContact';
+import findContact from '../../helpers/findContact';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default class App extends Component {
   state = {
@@ -43,15 +44,15 @@ export default class App extends Component {
     const foundContact = findContact(contacts, contact);
 
     if (foundContact) {
-      alert(`${contact.name} is already in contacts!`);
+      toast.warn(`${contact.name} is already in contacts!`);
       return;
     }
     if (contact.name.length > 1 && contact.number.length > 1) {
       this.setState(state => ({ contacts: [...oldContacts, savingContact] }));
     } else if (contact.name.length <= 1) {
-      alert('Contact name is too small!');
+      toast.warn('Contact name is too small!');
     } else if (contact.number.length <= 1) {
-      alert('Contact number is too small!');
+      toast.warn('Contact number is too small!');
     }
   };
 
@@ -68,9 +69,10 @@ export default class App extends Component {
       <>
         <h1>Phonebook</h1>
         <ContactForm onHandleSubmit={this.addContact} />
+        <ToastContainer position="top-right" autoClose={3000} closeOnClick />
         <h2>Contacts</h2>
         <ContactFilter value={filter} onChangeFilter={this.changeFilter} />
-        {contacts.length >= 2 && (
+        {contacts.length >= 1 && (
           <ContactList
             items={filteredContacts}
             onDeleteContact={this.deleteContact}
