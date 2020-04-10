@@ -32,6 +32,10 @@ export default class ContactForm extends Component {
 
   render() {
     const { name, number } = this.state;
+    let disabled;
+    name.length >= 1 && number.length >= 1
+      ? (disabled = false)
+      : (disabled = true);
 
     return (
       <form onSubmit={this.handleSubmit} className={styles.form}>
@@ -57,11 +61,7 @@ export default class ContactForm extends Component {
             className={styles.input}
           />
         </label>
-        {name.length >= 1 && number.length >= 1 ? (
-          <Button title="Add contact" disabled={false} />
-        ) : (
-          <Button title="Add contact" disabled={true} />
-        )}
+        <Button title="Add contact" disabled={disabled} />
       </form>
     );
   }
